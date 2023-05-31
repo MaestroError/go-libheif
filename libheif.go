@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"image"
 	"image/jpeg"
-	_ "image/jpeg"
 	"image/png"
 	"io/ioutil"
 	"os"
@@ -14,28 +13,34 @@ import (
 	"github.com/strukturag/libheif/go/heif"
 )
 
-func saveAsJpeg(img image.Image, filename string, quality int) {
+func saveAsJpeg(img image.Image, filename string, quality int) bool {
 	var out bytes.Buffer
 	if err := jpeg.Encode(&out, img, &jpeg.Options{Quality: quality}); err != nil {
 		fmt.Printf("Could not encode image as JPEG: %s\n", err)
+		return false
 	} else {
 		if err := ioutil.WriteFile(filename, out.Bytes(), 0644); err != nil {
 			fmt.Printf("Could not save JPEG image as %s: %s\n", filename, err)
+			return false
 		} else {
 			fmt.Printf("Written to %s\n", filename)
+			return true
 		}
 	}
 }
 
-func saveAsPng(img image.Image, filename string) {
+func saveAsPng(img image.Image, filename string) bool {
 	var out bytes.Buffer
 	if err := png.Encode(&out, img); err != nil {
 		fmt.Printf("Could not encode image as PNG: %s\n", err)
+		return false
 	} else {
 		if err := ioutil.WriteFile(filename, out.Bytes(), 0644); err != nil {
 			fmt.Printf("Could not save PNG image as %s: %s\n", filename, err)
+			return false
 		} else {
 			fmt.Printf("Written to %s\n", filename)
+			return true
 		}
 	}
 }
@@ -59,33 +64,20 @@ func decodeHeifImage(filename string) (image.Image, string) {
 	return img, magic
 }
 
-func convertImageToHeif(filename string, newFileName string) {
+func convertFileToHeif(filename string, newFileName string) bool {
 	file, err := os.Open(filename)
 	if err != nil {
 		fmt.Printf("failed to open file %v\n", file)
-		return
+		return false
 	}
 	defer file.Close()
 
 	i, format, err := image.Decode(file)
 	if err != nil {
 		fmt.Printf("failed to decode image: %v\n", err)
-		return
+		return false
 	}
-
-	const quality = 100
-	ctx, err := heif.EncodeFromImage(i, heif.CompressionHEVC, quality, heif.LosslessModeEnabled, heif.LoggingLevelFull)
-	if err != nil {
-		fmt.Printf("failed to heif encode image: %v\n", err)
-		return
-	}
-
-	out := newFileName
-	if err := ctx.WriteToFile(out); err != nil {
-		fmt.Printf("failed to write to file: %v\n", err)
-		return
-	}
-	fmt.Printf("Imaage was %s format, Written to %s\n", format, out)
+	return SaveImageAsHeif(i, format, newFileName)
 }
 
 func exampleHeifLowlevel(filename string) {
@@ -146,18 +138,39 @@ func returnImageFromHeif(filename string) image.Image {
 	return img
 }
 
-func HeifToPng(heifImagePath string, newPngImagePath string) {
+func HeifToPng(heifImagePath string, newPngImagePath string) bool {
 	img := returnImageFromHeif(heifImagePath)
 	if img == nil {
-		return
+		return false
 	}
-	saveAsPng(img, newPngImagePath)
+	return saveAsPng(img, newPngImagePath)
 }
 
-func HeifToJpeg(heifImagePath string, newJpegImagePath string) {
+func HeifToJpeg(heifImagePath string, newJpegImagePath string, quality int) bool {
 	img := returnImageFromHeif(heifImagePath)
 	if img == nil {
-		return
+		return false
 	}
-	saveAsJpeg(img, newJpegImagePath, 100)
+	return saveAsJpeg(img, newJpegImagePath, quality)
+}
+
+func ImageToHeif(jpegOrPngImagePath string, newHeifImagePath string) bool {
+	return convertFileToHeif(jpegOrPngImagePath, newHeifImagePath)
+}
+
+func SaveImageAsHeif(i image.Image, format string, newHeifImagePath string) bool {
+	const quality = 100
+	ctx, err := heif.EncodeFromImage(i, heif.CompressionHEVC, quality, heif.LosslessModeEnabled, heif.LoggingLevelFull)
+	if err != nil {
+		fmt.Printf("failed to heif encode image: %v\n", err)
+		return false
+	}
+
+	out := newHeifImagePath
+	if err := ctx.WriteToFile(out); err != nil {
+		fmt.Printf("failed to write to file: %v\n", err)
+		return false
+	}
+	fmt.Printf("Image was %s format, Written to %s\n", format, out)
+	return true
 }

@@ -18,4 +18,6 @@ go get github.com/MaestroError/go-libheif
 ...
 
 ##### ToDo
-...
+- Refactor the functions
+- Add documentation and examples for each function
+- Write tests at least for the Public functions
