@@ -7,7 +7,7 @@ You need to install [libheif](https://github.com/strukturag/libheif) before usin
 brew install cmake make pkg-config x265 libde265 libjpeg libtool
 brew install libheif
 ```
-*note: Pay attention to the brew's recommendation while installing*    
+*Note: Pay attention to the brew's recommendation while installing*    
 
 ### Installation
 ```bash
@@ -18,6 +18,8 @@ go get github.com/MaestroError/go-libheif
 ...
 
 ##### ToDo
-- Refactor the functions
-- Add documentation and examples for each function
-- Write tests at least for the Public functions
+- Refactor the functions to return errors instead +
+- Add documentation and examples for each function +
+- Write tests at least for the Public functions +
+- Write usage documentation
+- Write guide article for module
