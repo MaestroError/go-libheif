@@ -1,0 +1,43 @@
+name: Go
+
+on:
+  push:
+    branches: [ maestro ]
+  pull_request:
+    branches: [ maestro ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        go: ['1.16']
+        os: ['ubuntu-latest', 'macos-latest']
+
+    steps:
+    - name: Check Out Code
+      uses: actions/checkout@v2
+
+    - name: Set up Go 1.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ matrix.go }}
+
+    - name: Install Homebrew (Ubuntu)
+      if: startsWith(matrix.os, 'ubuntu')
+      run: |
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+    - name: Install dependencies
+      run: |
+        brew install cmake make pkg-config x265 libde265 libjpeg libtool
+        brew install libheif
+
+    - name: Download Go modules
+      run: go get -v -t -d ./...
+
+    - name: Run Tests
+      run: go test -v ./...
+
+    - name: Build
+      run: go build -v ./...
