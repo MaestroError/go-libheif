@@ -1,5 +1,6 @@
 # go-libheif
- GoLang wrapper for the libheif library, providing easy-to-use APIs for HEIC to JPEG/PNG conversions and vice versa. (Also provides support for AVIF to JPEG/PNG conversions)
+ GoLang wrapper for the libheif library, providing easy-to-use APIs for HEIC to JPEG/PNG conversions and vice versa. (Also provides support for AVIF to JPEG/PNG conversions)      
+ This package was developed to support 
 
 ### Pre-requisites
 You need to install [libheif](https://github.com/strukturag/libheif) before using this module. You can check the [strukturag/libheif](https://github.com/strukturag/libheif) for installation instructions, but as I have found, the easiest way for me was to use [brew](https://brew.sh/):
@@ -86,9 +87,12 @@ func main() {
 Please consult the GoDoc documentation for more detailed information about the provided functions and their usage.          
 
 
+### Credits
+Thanks to @strukturag and @farindk (Dirk Farin) for his work on the [libheif](https://github.com/strukturag/libheif) library 🙏
+
 ##### ToDo
 - Write usage documentation +
 - Write guide article for module
 - Add contribution section in readme
-- Implement the module in [php-heic-to-jpg](https://github.com/MaestroError/php-heic-to-jpg)
-- Add credits section in readme and update in php-heic-to-jpg
+- Implement the module in [php-heic-to-jpg](https://github.com/MaestroError/php-heic-to-jpg) +
+- Add credits section in readme and update in php-heic-to-jpg +
