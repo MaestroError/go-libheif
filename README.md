@@ -89,7 +89,7 @@ func main() {
 ```
 *Note: Quality for **HeifToJpeg** function and image format for **SaveImageAsHeif** function should be provided. The quality value ranges from 1 to 100 inclusive, higher values meaning better quality. The format for **SaveImageAsHeif** is the format of the original image.*       
 
-Please consult the GoDoc documentation for more detailed information about the provided functions and their usage.          
+Please consult the GoDoc [documentation](https://pkg.go.dev/github.com/MaestroError/go-libheif) for more detailed information about the provided functions and their usage.          
 
 
 ### Credits
