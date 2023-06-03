@@ -10,6 +10,11 @@ brew install libheif
 ```
 *Note: Pay attention to the brew's recommendation while installing*    
 
+You can find installation scripts in [heif-converter-image](https://github.com/MaestroError/heif-converter-image) repository with names:
+- install-libheif.sh
+- install-libheif-macos.sh
+- install-libheif-windows.bat
+
 ### Installation
 ```bash
 go get github.com/MaestroError/go-libheif
@@ -89,6 +94,9 @@ Please consult the GoDoc documentation for more detailed information about the p
 
 ### Credits
 Thanks to @strukturag and @farindk (Dirk Farin) for his work on the [libheif](https://github.com/strukturag/libheif) library 🙏
+
+### Implementation
+If you are looking just for the easy way to convert images, this module is already implemented [here](https://github.com/MaestroError/heif-converter-image) as CLI app and docker image
 
 ##### ToDo
 - Write usage documentation +
