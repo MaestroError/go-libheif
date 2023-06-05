@@ -18,12 +18,13 @@ import (
 // The quality should be an integer between 1 and 100, inclusive, higher is better.
 //
 // Example:
-// 	img := image.NewRGBA(image.Rect(0, 0, 100, 100))
-// 	filename := "output.jpg"
-// 	quality := 80
-// 	if err := saveAsJpeg(img, filename, quality); err != nil {
-// 		log.Fatal(err)
-// 	}
+//
+//	img := image.NewRGBA(image.Rect(0, 0, 100, 100))
+//	filename := "output.jpg"
+//	quality := 80
+//	if err := saveAsJpeg(img, filename, quality); err != nil {
+//		log.Fatal(err)
+//	}
 func saveAsJpeg(img image.Image, filename string, quality int) error {
 	// Validate input
 	if img == nil {
@@ -54,11 +55,12 @@ func saveAsJpeg(img image.Image, filename string, quality int) error {
 // saveAsPng encodes an image to PNG format and saves it to a file.
 //
 // Example:
-// 	img := image.NewRGBA(image.Rect(0, 0, 100, 100))
-// 	filename := "output.png"
-// 	if err := saveAsPng(img, filename); err != nil {
-// 		log.Fatal(err)
-// 	}
+//
+//	img := image.NewRGBA(image.Rect(0, 0, 100, 100))
+//	filename := "output.png"
+//	if err := saveAsPng(img, filename); err != nil {
+//		log.Fatal(err)
+//	}
 func saveAsPng(img image.Image, filename string) error {
 	// Validate input
 	if img == nil {
@@ -90,12 +92,13 @@ func saveAsPng(img image.Image, filename string) error {
 // If an error occurs during opening the file or decoding the image, it is returned.
 //
 // Example:
-// 	filename := "image.heic"
-// 	img, format, err := decodeHeifImage(filename)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-// 	// img is now an image.Image object and format is the format of the image.
+//
+//	filename := "image.heic"
+//	img, format, err := decodeHeifImage(filename)
+//	if err != nil {
+//		log.Fatal(err)
+//	}
+//	// img is now an image.Image object and format is the format of the image.
 func decodeHeifImage(filename string) (image.Image, string, error) {
 	// Open the file
 	file, err := os.Open(filename)
@@ -125,11 +128,12 @@ func decodeHeifImage(filename string) (image.Image, string, error) {
 // to the caller.
 //
 // Example:
-// 	srcFile := "input.jpg"
-// 	dstFile := "output.heif"
-// 	if err := convertFileToHeif(srcFile, dstFile); err != nil {
-// 		log.Fatal(err)
-// 	}
+//
+//	srcFile := "input.jpg"
+//	dstFile := "output.heif"
+//	if err := convertFileToHeif(srcFile, dstFile); err != nil {
+//		log.Fatal(err)
+//	}
 func convertFileToHeif(filename string, newFileName string) error {
 	// Validate input
 	if filename == "" || newFileName == "" {
@@ -163,11 +167,12 @@ func convertFileToHeif(filename string, newFileName string) error {
 // decoded or the decoded image is not in HEIF format, an error is returned.
 //
 // Example:
-// 	filename := "image.heic"
-// 	img, err := returnImageFromHeif(filename)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
+//
+//	filename := "image.heic"
+//	img, err := returnImageFromHeif(filename)
+//	if err != nil {
+//		log.Fatal(err)
+//	}
 func returnImageFromHeif(filename string) (image.Image, error) {
 	// Validate input
 	if filename == "" {
@@ -195,10 +200,11 @@ func returnImageFromHeif(filename string) (image.Image, error) {
 // the output PNG image file should be saved.
 //
 // Example:
-// 	err := HeifToPng("input.heic", "output.png")
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
+//
+//	err := HeifToPng("input.heic", "output.png")
+//	if err != nil {
+//		log.Fatal(err)
+//	}
 func HeifToPng(heifImagePath string, newPngImagePath string) error {
 	// Convert the HEIF image to the internal image representation.
 	img, err := returnImageFromHeif(heifImagePath)
@@ -216,10 +222,11 @@ func HeifToPng(heifImagePath string, newPngImagePath string) error {
 // the output JPEG image file should be saved, and the quality of the output JPEG image.
 //
 // Example:
-// 	err := HeifToJpeg("input.heic", "output.jpeg", 80)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
+//
+//	err := HeifToJpeg("input.heic", "output.jpeg", 80)
+//	if err != nil {
+//		log.Fatal(err)
+//	}
 func HeifToJpeg(heifImagePath string, newJpegImagePath string, quality int) error {
 	// Convert the HEIF image to the internal image representation.
 	img, err := returnImageFromHeif(heifImagePath)
@@ -237,10 +244,11 @@ func HeifToJpeg(heifImagePath string, newJpegImagePath string, quality int) erro
 // the output HEIF image file should be saved.
 //
 // Example:
-// 	err := ImageToHeif("input.jpeg", "output.heic")
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
+//
+//	err := ImageToHeif("input.jpeg", "output.heic")
+//	if err != nil {
+//		log.Fatal(err)
+//	}
 func ImageToHeif(jpegOrPngImagePath string, newHeifImagePath string) error {
 	// Convert the image to HEIF format and return the result.
 	return convertFileToHeif(jpegOrPngImagePath, newHeifImagePath)
@@ -252,12 +260,13 @@ func ImageToHeif(jpegOrPngImagePath string, newHeifImagePath string) error {
 // original image format is printed to the console.
 //
 // Example:
-// 	img := image.NewRGBA(image.Rect(0, 0, 100, 100))
-// 	format := "png"
-// 	newHeifImagePath := "output.heif"
-// 	if err := SaveImageAsHeif(img, format, newHeifImagePath); err != nil {
-// 		log.Fatal(err)
-// 	}
+//
+//	img := image.NewRGBA(image.Rect(0, 0, 100, 100))
+//	format := "png"
+//	newHeifImagePath := "output.heif"
+//	if err := SaveImageAsHeif(img, format, newHeifImagePath); err != nil {
+//		log.Fatal(err)
+//	}
 func SaveImageAsHeif(i image.Image, format string, newHeifImagePath string) error {
 	// Validate input
 	if i == nil {

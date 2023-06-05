@@ -1,8 +1,12 @@
 # go-libheif
- GoLang wrapper for the libheif library, providing easy-to-use APIs for HEIC to JPEG/PNG conversions and vice versa. (Also provides support for AVIF to JPEG/PNG conversions)      
- This package was developed to support 
+ GoLang wrapper for the libheif library, providing easy-to-use APIs for HEIC to JPEG/PNG conversions and vice versa (Also provides support for AVIF to JPEG/PNG conversions).      
+ This package was originally developed to support the [php-heic-to-jpg](https://github.com/MaestroError/php-heic-to-jpg) package, which had [problems](https://github.com/MaestroError/php-heic-to-jpg/issues/15) while converting some HEIF images.   
 
-### Pre-requisites
+#### Implementation:
+- For a swift start, consider browsing our [quickstart guide](https://medium.com/@revaz.gh/using-the-go-libheif-module-for-converting-images-between-the-heic-format-and-other-popular-formats-e7829165c368) on Medium.
+- If you're primarily interested in a hassle-free image conversion tool, we have already integrated this module into a Command Line Interface (CLI) application and a docker image, available [here](https://github.com/MaestroError/heif-converter-image).
+
+### Prerequisites
 You need to install [libheif](https://github.com/strukturag/libheif) before using this module. You can check the [strukturag/libheif](https://github.com/strukturag/libheif) for installation instructions, but as I have found, the easiest way for me was to use [brew](https://brew.sh/):
 ```bash
 brew install cmake make pkg-config x265 libde265 libjpeg libtool
@@ -14,6 +18,8 @@ You can find installation scripts in [heif-converter-image](https://github.com/M
 - install-libheif.sh
 - install-libheif-macos.sh
 - install-libheif-windows.bat
+
+*If the installation process seems a bit challenging, we recommend to consider using the [heif-converter-image](https://github.com/MaestroError/heif-converter-image) which offers a ready-to-use docker image.*
 
 ### Installation
 ```bash
@@ -34,12 +40,12 @@ import (
 )
 
 func main() {
-	err := go_libheif.HeifToJpeg("input.heic", "output.jpeg", 80)
+	err := libheif.HeifToJpeg("input.heic", "output.jpeg", 80)
 	if err != nil {
 		log.Fatal(err)
 	}
 	
-	err = go_libheif.HeifToPng("input.heic", "output.png")
+	err = libheif.HeifToPng("input.heic", "output.png")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -58,7 +64,7 @@ import (
 )
 
 func main() {
-	err := go_libheif.ImageToHeif("input.jpeg", "output.heic")
+	err := libheif.ImageToHeif("input.jpeg", "output.heic")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -80,7 +86,7 @@ import (
 
 func main() {
 	img := image.NewRGBA(image.Rect(0, 0, 100, 100))
-	err := go_libheif.SaveImageAsHeif(img, "png", "output.heic")
+	err := libheif.SaveImageAsHeif(img, "png", "output.heic")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -91,16 +97,24 @@ func main() {
 
 Please consult the GoDoc [documentation](https://pkg.go.dev/github.com/MaestroError/go-libheif) for more detailed information about the provided functions and their usage.          
 
+### Contributions
+Contributions to `go-libheif` are wholeheartedly encouraged! We believe in the power of the open source community to build the most robust and accessible projects. Whether you are a seasoned Go developer or just getting started, your perspective and efforts can help improve this project for everyone.
+
+Here are a few ways you might contribute:
+
+- Bug Fixes: If you encounter a problem with go-libheif, please open an issue in the GitHub repository. Even better, if you can solve the issue, we welcome pull requests.
+- New Features: Interested in expanding the capabilities of go-libheif? Please open an issue to discuss your idea before starting on the code. Once we've agreed on an approach, you can submit a pull request with your new feature.
+- Documentation: Clear documentation is vital to any project. If you can clarify our instructions or add helpful examples, we would appreciate your input.
+
+Here are the steps for contributing code:
+
+- Fork the go-libheif repository and clone it to your local machine.
+- Create a new branch for your changes.
+- Make your changes and push them to your fork.
+- Open a pull request from your fork's branch to the go-libheif main branch.
+
+Please remember to be as detailed as possible in your pull request descriptions to help the maintainers understand your changes.
+We look forward to seeing what you contribute! Together, we can make go-libheif even better.
 
 ### Credits
 Thanks to @strukturag and @farindk (Dirk Farin) for his work on the [libheif](https://github.com/strukturag/libheif) library 🙏
-
-### Implementation
-If you are looking just for the easy way to convert images, this module is already implemented [here](https://github.com/MaestroError/heif-converter-image) as CLI app and docker image
-
-##### ToDo
-- Write usage documentation +
-- Write guide article for module
-- Add contribution section in readme
-- Implement the module in [php-heic-to-jpg](https://github.com/MaestroError/php-heic-to-jpg) +
-- Add credits section in readme and update in php-heic-to-jpg +
